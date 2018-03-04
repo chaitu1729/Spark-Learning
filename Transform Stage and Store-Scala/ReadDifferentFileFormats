@@ -1,0 +1,7 @@
+
+//Both load and read can be used to read diff file formats and return type is Dataframe
+//Rdd is just a distributed collection whereas dataframe is distributed collection + structure
+sqlcontext.load(String:path,String:source)
+sqlContext.read.json(path)
+
+val orderDF = sqlContext.read.json("/public/retail_db_json/orders")

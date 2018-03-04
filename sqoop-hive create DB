@@ -1,0 +1,6 @@
+----------------------------------------------------Hive create db-------------------------------------------------------
+hive
+create database chaitu1729_sqoop_import
+use chaitu1729_sqoop_import
+create table t (i int);
+insert into table t values(1);

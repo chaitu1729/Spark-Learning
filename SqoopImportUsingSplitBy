@@ -1,0 +1,32 @@
+
+----------------------------------------------------------------Notes to Read----------------------------------------------------------------------------------------------------------
+when a sqoop command is executed first it gets its metadata loaded and then it picks its primary key and then process records according to no of mappers menioned in import command
+using split by we can process tables that doesn't have any primary key
+
+
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table order_items_nopk \
+--warehouse-dir /user/chaitu1729/sqoop_import/retail_db \
+--split-by order_item_order_id
+
+
+we shall keep the following points in mind when we use splitby
+//split-by column shall be indexed, non indexed columns will create a hit on performance
+//values in the split by column should be sparse (meaning less one to many values eg one orderId can have many items associated with it in that case all the rows related
+ to that order Id will be served by one mapper)
+//also the values in split by column should be sequence generated
+//and the split by column shall not have null values
+
+----------------------------------------------------------------SplitData for non numeric Primary key----------------------------------------------------------------------------------
+
+sqoop import \
+-Dorg.apache.sqoop.splitter.allow_text_splitter=true \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table orders \
+--warehouse-dir /user/chaitu1729/sqoop_import/retail_db \
+--split-by order_status

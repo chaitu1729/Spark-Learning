@@ -1,0 +1,22 @@
+val orders = sc.textFile("/public/retail_db/orders")
+val orderItems = sc.textFile("/public/retail_db/order_items")
+val ordersMap = orders.map(order =>{
+val o = order.split(",")
+(o(0).toInt,o(1).substring(0,10))
+})
+val ordersItemsMap = orderItems.map(orderItem =>{
+val oi = orderItem.split(",")
+(oi(1).toInt,oi(4).toFloat)
+})
+val ordersJoin = ordersMap.join(ordersItemsMap)
+
+val ordersMapforJoin = orders.map(order =>{
+(order.split(",")(0).toInt,order)
+})
+
+val ordersItemsMapForJoin = orderItems.map(orderItem =>{
+(orderItem.split(",")(0).toInt,orderItem)
+})
+
+val ordersLeftOuterJoin = ordersMapforJoin.leftOuterJoin(ordersItemsMapForJoin)
+val onlyOrders = ordersLeftOuterJoin.filter(element => element._2._2 == None)

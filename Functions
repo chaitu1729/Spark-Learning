@@ -1,0 +1,22 @@
+def sum(lb: Int, ub: Int)={
+  var total = 0;
+  for(element<-(lb to ub))
+  {
+    total = total+element
+  }
+  total
+}
+
+def secFun(func: Int => Int, lb: Int, ub: Int)={
+  var total = 0;
+  for(element <- (lb to ub))
+  {
+    total = total+func(element)
+  }
+  total
+}
+
+def squareFunc(value: Int)={
+  var valu = value*value
+  valu
+}

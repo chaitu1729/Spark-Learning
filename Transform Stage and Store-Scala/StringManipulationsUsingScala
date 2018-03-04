@@ -1,0 +1,7 @@
+val orderDF = sqlContext.read.json("/public/retail_db_json/orders")
+val str = orders.first
+val a = str.split(,)
+val orderDate = a(1)
+orderDate.contains("2017") //returns flase if date is 2013
+
+orderdate.substring(0,10) //prints date uptp YYYY-MM-DD

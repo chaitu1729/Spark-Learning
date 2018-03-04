@@ -1,0 +1,4 @@
+val l = List("Hello","How are you doing","Lets perform word count")
+val l_rdd = sc.parallelize(l)
+val l_fMap = l_rdd.flatMap(ele => ele.split(" "))
+val wordCount = l_fMap.map(word => (word,"")).countByKey

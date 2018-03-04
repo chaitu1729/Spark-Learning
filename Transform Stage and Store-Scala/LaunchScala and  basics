@@ -1,0 +1,18 @@
+spark-shell \
+--master yarn \
+--conf spark.ui.port=12654 \
+--num-executors 1 \
+--executor-memory 512M
+
+//spark conf details
+
+cd /etc/spark/conf
+vi spark-defaults.conf
+vi spark-env.sh
+
+initialize spark-context programatically
+
+import org.apache.spark.{SparkConf,SparkContext}
+val conf=new SparkConf().setAppName("DAILY REVENUE").setMaster("yarn-client")
+val sc = new SparkContext(conf)
+sc.getConf.getAll.foreach(println)

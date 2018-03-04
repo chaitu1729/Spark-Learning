@@ -1,0 +1,25 @@
+//the below command will create object orders of type RDD
+val orders = sc.textFile("/public/retail_db/orders")
+
+//to get first records
+orders.first
+
+//to get first 10 records
+orders.take(10)
+
+//to create RDD on local file system
+
+val productsRaw = scala.io.Source.fromFile("/data/retail_db/products/part-00000").getLines.toList you can see this under jobs that are running in tracking url
+val productsRDD = sc.parallelize(productsRaw)
+
+lazy evaluation acual code will be executed only if action is executed until then it compiles all transformations into DAG
+//actions an transformation until we perform an action all the transformations
+ are stored as DAG Directed acyclic graph
+
+ takeSample(true,100) will fetch an array of random sample of size 100
+
+
+//always use foreach on top of take or takesample on top of rdd and
+dont use foreach(println) directly on top of rdd it will create a lot of overhead
+
+orders.takeSample(100).foreach(println)

@@ -1,0 +1,65 @@
+
+--------------------------------------------------------import using Target and Warehouse Directories--------------------------------------------------
+//if we mention target directory import data will be copied under mentioned directory whereas if we use warehouse-dir contents will be copied under mentioned
+//directory/tablename
+
+
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table order_items \
+--target-dir \user\chaitu1729\sqoop_import\retail_db\order_items
+
+
+--------------------------------------------------------Override Number of mappers--------------------------------------------------
+//overriding number of mappers
+
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table order_items \
+--target-dir \user\chaitu1729\sqoop_import\retail_db\order_items2 \
+--num-mappers 1
+
+
+--------------------------------------------------------auto-reset-to-one-mapper--------------------------------------------------
+//resets the default mapper to one for smaller datasets
+
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table order_items \
+--target-dir \user\chaitu1729\sqoop_import\retail_db\order_items2 \
+--auto-reset-to-one-mapper
+
+
+
+
+
+
+
+
+--------------------------------------------------------delete target directory if exists--------------------------------------------------
+
+
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table order_items \
+--target-dir \user\chaitu1729\sqoop_import\retail_db\order_items2 \
+--num-mappers 1 \
+--delete-target-dir
+
+--------------------------------------------------------Append data to existing files--------------------------------------------------
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table order_items \
+--target-dir \user\chaitu1729\sqoop_import\retail_db\order_items2 \
+--num-mappers 1 \
+--append

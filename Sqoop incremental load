@@ -1,0 +1,57 @@
+--------------------------------------------------Incremental Load using query-------------------------------------------------------
+//below is an example of first load
+
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--num-mappers 2 \
+--target-dir /user/chaitu1729/sqoop_import/retail_db_Incremental \
+--query "select * from orders where \$CONDITIONS and order_date like '2013-%'" \
+--split-by order_id
+
+//below is an example of Incremental
+
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--num-mappers 2 \
+--target-dir /user/chaitu1729/sqoop_import/retail_db_Incremental \
+--query "select * from orders where \$CONDITIONS and order_date like '2014-01%'" \
+--split-by order_id \
+--append
+
+--------------------------------------------------Incremental Load using where-------------------------------------------------------
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--num-mappers 2 \
+--target-dir /user/chaitu1729/sqoop_import/retail_db_Incremental \
+--table orders \
+--where "order_date like '2014-%'" \
+--append
+
+
+--------------------------------------------------Incremental Load using Check column------------------------------------------------------
+
+
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--num-mappers 2 \
+--target-dir /user/chaitu1729/sqoop_import/retail_db_Incremental \
+--table orders \
+--check-column order_date \
+--incremental append \
+--last-value '2014-02-28'
+
+
+
+// in case of incremental load using check column there are two incremental modes append and last modified we use append for insert only tables and
+lastmodified for transactional tables
+
+//using sqoop-job module we can even store the value of last-value in memory so that there isnt any need to hardcode which makes it different FROM
+incremental loads using query and where

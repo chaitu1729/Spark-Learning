@@ -1,0 +1,26 @@
+------------------------------------------------Eval is used to evaluate SQL statements and db connectivity------------------------------
+sqoop eval \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--query "SELECT * FROM orders LIMIT 10"
+
+
+
+sqoop eval \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--query "INSERT INTO orders VALUES (100000,\"2018-2-4\",100000,\"MUMMY\")"
+
+sqoop eval \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_export \
+--username retail_user \
+--password itversity \
+--query "create table MUMMY (i INT)"
+
+sqoop eval \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--query "INSERT INTO order_items VALUES (100000,\"2018-2-4\",100000,\"MUMMY\")"

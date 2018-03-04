@@ -1,0 +1,6 @@
+val orders = sc.textFile("/public/retail_db/orders")
+val ordersFil = orders.filter(order => order.contains("COMPLETE"))
+//if we need to find distinct elements in a dataset its a map function
+//basically any operation on data is map or filter
+
+val ordersDis = orders.map(order => order.split(",")(3))

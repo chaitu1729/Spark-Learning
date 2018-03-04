@@ -1,0 +1,12 @@
+//map(func) flatmap(func)
+val orders = sc.textFile("/public/retail_db/orders")
+val orderDate = orders.first.split(",")(1).substring(0,10).replace("-","").toInt;
+val orderdates = orders.map((str:String) =>{
+  str.split(",")(1).substring(0,10).replace("-","");
+})
+val orderspairedRDD = orders.map(order => {
+  (order.split(",")(0).toInt,order.split(",")(1).replace("-",""))
+})
+val orderspairedRDD = orders.map(order => {
+  (order.split(",")(0).toInt,order)
+})

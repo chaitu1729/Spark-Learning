@@ -1,0 +1,41 @@
+
+------------------------------------------------replace null values by non null values--------------------------------------------
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/hr_db \
+--username hr_user \
+--num-mappers 2 \
+--password itversity \
+--table employees \
+--target-dir /user/chaitu1729/sqoop_import/retail_db/hr_db \
+--null-non-string -1
+
+
+
+------------------------------------------------replace delimiters and new line characters-----------------------------------------
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/hr_db \
+--username hr_user \
+--num-mappers 2 \
+--password itversity \
+--table employees \
+--target-dir /user/chaitu1729/sqoop_import/retail_db/hr_db \
+--null-non-string -1 \
+--fields-terminated-by "\t" \
+
+
+
+------------------------------------------------replace delimiters with ASCII characters-----------------------------------------
+
+
+
+
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/hr_db \
+--username hr_user \
+--num-mappers 2 \
+--password itversity \
+--table employees \
+--target-dir /user/chaitu1729/sqoop_import/retail_db/hr_db1 \
+--null-non-string -1 \
+--fields-terminated-by "/u000" \
+--lines-terminated-by ":"

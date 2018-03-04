@@ -1,0 +1,11 @@
+import scala.io.Source
+
+//in a given dataset of transactions find sum of all transactions that are CLOSED
+val orderItems = Source.fromFile("data/retail_db/orders/part-00000").getLines
+val orderItemsFilter = orderItems.filter(item => item.split(",")(3)=="CLOSED")
+
+//map function that does a row transformation of obtaining the ordercost
+val orderRevenue = orderItems.
+  filter(item => item.split(",")(3)=="CLOSED").
+  map(item => item.split(",")(2).toFloat).
+  reduce((t,v) => t + v)

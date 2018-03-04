@@ -1,0 +1,55 @@
+--------------------------------section1----------------------------------
+
+//to check if sqoop is installed
+sqoop version
+//connect to a database (-h is for dab address and -p is to prompt for password in new line)
+mysql -u retail_user -h ms.itversity.com -p
+
+//command to list al databases
+show database;
+//command to connect to a databases
+use retail_db;
+//command to show all tables
+show tables;
+---------------------------------section2------------------------------------
+//connect to a database in sqoop first step and import step is to connect to a db using Sqoop
+// we have to make sure the required jars are available under the location below.
+
+jar name: mysql-connector-java.jar
+cd /usr/hdp/current/sqoop-client/lib
+
+//example that showing db connection to mysql db
+
+sqoop import --connect jdbc:mysql://database.example.com:portnumber(ignore if port is default)/employees(dbname)
+
+//we may need to provide username and password aswell
+$ sqoop import --connect jdbc:mysql://database.example.com/employees \
+    --username aaron --password 12345
+
+
+--------------------------------section2.1------------------------------------
+//list databases in itversity
+
+sqoop list-databases \
+--connect jdbc:mysql://ms.itversity.com:3306 \
+--username retail_user \
+--password itversity
+
+//connect to db with password promptrd
+sqoop list-databases \
+--connect jdbc:mysql://ms.itversity.com:3306 \
+--username retail_user \
+--p
+
+//connect to db with password referring to a filter
+sqoop list-databases \
+--connect jdbc:mysql://ms.itversity.com:3306 \
+--username retail_user \
+--password /usr/fully qualified location of file/
+--------------------------------section2.2-------------------------------------
+
+//list tables
+sqoop list-tables \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity

@@ -1,0 +1,35 @@
+
+
+------------------------------------------------------------use compress to compress the files to .gz format----------------------------------------------------
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table order_items \
+--target-dir \user\chaitu1729\sqoop_import\retail_db\order_items \
+--num-mappers 2 \
+--append \
+--as-textfile \
+--compress
+-------------------------------------------------------------various types of compression formats(Codecs)---------------------------------------------------------
+the below types of codecs are available in itversity cluster, if we need to add any we can add them in core-site.xml under /etc/hadoop/conf directory and we need to
+make sure all the required jars are available under appropriate directory
+<property>
+      <name>io.compression.codecs</name>
+      <value>org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.SnappyCodec</value>
+    </property>
+
+    Eg if in exam it was asked to compress in snappy format, we need to get the value of argument from core-site.example
+
+
+    sqoop import \
+    --connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+    --username retail_user \
+    --password itversity \
+    --table order_items \
+    --target-dir \user\chaitu1729\sqoop_import\retail_db\order_items \
+    --num-mappers 2 \
+    --append \
+    --as-textfile \
+    --compress \
+    --compression-codec org.apache.hadoop.io.compress.SnappyCodec

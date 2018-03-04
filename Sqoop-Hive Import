@@ -1,0 +1,48 @@
+sqoop import \
+-Dorg.apache.sqoop.splitter.allow_text_splitter=true \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table order_items \
+--hive-import \
+--hive-database chaitu1729_sqoop_import \
+--hive-table order_items \
+--num-mappers 2 \
+--append
+
+in order to see data copied in to hive we need to use the below commands
+
+Hive
+use database chaitu1729_sqoop_import;
+describe formatted order_items;
+the above command will give hdfs location and if we go to that path we can see the data;
+
+IF WE EXECUTE THE FIRST COMMAND TWICE THE DATA WILL BE COPIED TWICE IN ORDER TO AVOID THAT WE CAN use
+hive-overrite instead of append to ovverride data instead of copying it TWICE
+
+sqoop import \
+-Dorg.apache.sqoop.splitter.allow_text_splitter=true \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table order_items \
+--hive-import \
+--hive-database chaitu1729_sqoop_import \
+--hive-table order_items \
+--hive-overwrite \
+--num-mappers 2
+
+
+sqoop import \
+-Dorg.apache.sqoop.splitter.allow_text_splitter=true \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table orders \
+--hive-import \
+--hive-database chaitu1729_sqoop_import \
+--hive-table order_items \
+--hive-overwrite \
+--num-mappers 2
+
+hive-overrite will drop the already created hdfs folder with the table name and creates order_items folder again and copies the new data

@@ -1,0 +1,22 @@
+export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk
+//unix command to see all previous commands that starts with order()
+:h? order(
+vi filename //creates and opens a file
+hit i to get insert mode
+hit esc to get the command mode
+hit ZZ to save and escape Vi mode
+cut -- put cursor on a word and in command mode hit dw it just cuts the word till its end
+yw = copy
+
+//view files in a directory
+hadoop fs -ls dirPath
+
+//if you know only file name and not sure about entire path
+hadoop fs -ls filename
+
+//command to copy contents in cluster to local machine
+hadoop fs -get /clustername client_machine_name
+//remove directory in hadoop
+hadoop fs -rm -r /user/chaitu1729/sqoop_import/retail_db/hr_db
+//to get the size of a directory
+hadoop fs -du -s -h /public/retail_db

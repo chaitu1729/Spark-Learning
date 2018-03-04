@@ -1,0 +1,27 @@
+------------------------------------------------------------------Boundary Query--------------------------------------------------------------
+when we run a sqoop import command it actually uses a query that returns two values for minimum and maximum, using boundary query we can only import
+values with min and max values falling in that range
+
+
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table order_items \
+--target-dir \user\chaitu1729\sqoop_import\retail_db\order_items2 \
+--num-mappers 1 \
+--append \
+--boundary-query 'select min(order_item_id),max(order_item_id) from order_items where order_item_id>99999'
+
+
+
+//we can also hard code the values
+sqoop import \
+--connect jdbc:mysql://ms.itversity.com:3306/retail_db \
+--username retail_user \
+--password itversity \
+--table order_items \
+--target-dir \user\chaitu1729\sqoop_import\retail_db\order_items2 \
+--num-mappers 1 \
+--append \
+--boundary-query 'select 1,100000 from dual'

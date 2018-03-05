@@ -1,0 +1,12 @@
+val orderItems = sc.textFile("/public/retail_db/order_items")
+val orderItemRevenue = orderItems.map(oi => (oi.split(",")(1).toInt,oi.split(",")(4).toFloat))
+val revenueAndMaxRevenue = orderItemRevenue.aggregateByKey((0.0,0.0))(
+(inter,subTotal) => (inter._1+subTotal, if (inter._2 > subTotal) inter._2 else subTotal),
+(total,inter) => (total._1+inter._1, if (total._2 > inter._2) total._2 else inter._2)
+)
+revenueAndMaxRevenue.sortByKey().take(10).foreach(println)
+val revenueAndMinRevenue = orderItemRevenue.aggregateByKey((0.0,Double.MaxValue))(
+(inter,subTotal) => (inter._1+subTotal, if (inter._2 < subTotal) inter._2 else subTotal),
+(total,inter) => (total._1+inter._1, if (total._2 < inter._2) total._2 else inter._2)
+)
+revenueAndMinRevenue.sortByKey().take(10).foreach(println)

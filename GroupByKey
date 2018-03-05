@@ -1,0 +1,22 @@
+//group by key is single threaded meaning that entire operation happens in one operation
+/*Problem statement
+* Get revenue per order-id
+get data in descending order by order_item_subtotal
+for each order-id
+*/
+val orderItems = sc.textFile("/public/retail_db/order_items")
+
+//Get revenue per order-id
+val orderItemRevenue = orderItems.map(oi => (oi.split(",")(1).toInt,oi.split(",")(4).toFloat))
+val orderItemGrouped = orderItemRevenue.groupByKey //returns an rdd of tuple cant  split by comma
+val ordeRItemGroupedRevenue = orderItemGrouped.map(oi => {
+val revenuesPerOrderId = oi._2.toList
+val sum = revenuesPerOrderId.sum
+(oi._1,sum)
+})
+
+//get data in descending order by order_item_subtotal
+val ordeRItemSorted = orderItemGrouped.map(oi => {
+val revenuesPerOrderId = oi._2.toList.sortBy(o => -o)
+(oi._1,revenuesPerOrderId)
+})

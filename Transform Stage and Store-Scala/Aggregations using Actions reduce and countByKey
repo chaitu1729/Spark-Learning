@@ -1,0 +1,26 @@
+//Aggregations -Global using actions
+val orders = sc.textFile("/public/retail_db/orders")
+orders.map(order => (order.split(",")(3),"")).countByKey.foreach(println) //count by key doesnt return an rdd it returns in Map
+
+val orderItems = sc.textFile("/public/retail_db/order_items")
+val orderItemRevenue = orderItems.map(oi => oi.split(",")(4).toFloat)
+val totalOrderItemRevenue = orderItemRevenue.reduce((total,subTotal) =>total+subTotal)
+
+//the way how reduce works is first it assigns the first two values
+//to the two arguments and then it stores the previously returned value
+//to the first arg and the next value to the second arg
+val orderItemsMaxRevenue = orderItemRevenue.reduce((total,subTotal) =>
+{
+  if(total>subTotal)
+  total
+  else
+  subTotal
+})
+
+val orderItemsMinRevenue = orderItemRevenue.reduce((total,subTotal) =>
+{
+  if(total<subTotal)
+  total
+  else
+  subTotal
+})

@@ -1,0 +1,16 @@
+//reduce By  key will be applied on a paired RDD
+val orderItems = sc.textFile("/public/retail_db/order_items")
+
+//Get revenue per order-id
+val orderItemRevenue = orderItems.map(oi => (oi.split(",")(1).toInt,oi.split(",")(4).toFloat))
+val orderItemsTotalRevenueRedByKey = orderItemRevenue.reduceByKey((total,revenue) => total+revenue)
+//min using reduceByKey
+val orderItemsMinRevenueRedByKey = orderItemRevenue.reduceByKey((total,revenue) =>
+{
+  if(total<revenue)
+    total
+  else
+    revenue
+})
+
+orderItemsMinRevenueRedByKey.sortByKey().take(10).foreach(println)//to sort the data

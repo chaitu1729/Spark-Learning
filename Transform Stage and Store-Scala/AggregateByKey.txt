@@ -1,0 +1,12 @@
+val orders = sc.textFile("/public/retail_db/order_items")
+val ordersMap = orders.map(order => (order.split(",")(1).toInt,order.split(",")(4).toFloat))
+
+//in case of aggregte by the we split the logic in two parts
+//1. logic for combiners
+//2. logic for Aggregation from combiners
+//in the logic for combiner the arg inter is the final desired output data type and arg subTotal is the variable for Value of the input tuple
+//the aggregation from combiner takes two args from two combiners and performs the logic
+val ordersAgregated = ordersMap.aggregateByKey((0.0,0.0))(
+(inter,subTotal) => (inter._1+subTotal, if(inter._2>subTotal) inter._2 else subTotal),
+(inter,finalval) =>(inter._1+finalval._1,if(inter._2>finalval._2) inter._2 else finalval._2)
+)

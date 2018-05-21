@@ -1,0 +1,43 @@
+//groupBykey works only on top of a paired RDD
+//groupBykey is so inefficeient as it doesnt use combiners and hence we shall use reducebyKey or aggregateByKey
+val orders = sc.textFile("/public/retail_db/order_items")
+val ordersMap = orders.map(order => (order.split(",")(1).toInt,order.split(",")(4).toFloat))
+val ordersGroupedbyKey = ordersMap.groupByKey()
+ // if we need the total revenue of each orderIds
+val totalrevenue = ordersGroupedbyKey.map(order =>
+{
+val totalRev = order._2.toList.sum
+  (order._1,totalRev)
+})
+
+
+
+
+//if we want data of all orderIds sorted based on revenuw and o/p is like
+/*
+(1,(200,150,125,90))
+(2,(300,250,225,190))
+we can follow the below logic
+the o/p data type will be RDD(int,List(Float))
+*/
+val ordersWithPriceSorted = ordersGroupedbyKey.map(order =>
+  {
+    val priceSet = order._2.toSet
+    val priceList = priceSet.toList
+    val priceListSorted =  priceList.sortBy(o => -o)
+  (order._1,priceListSorted)
+})
+//if we want data of all orderIds sorted based on revenuw and o/p is like below
+/*
+(1,200)
+(1,150)
+(1,125)
+(1,90)
+we can follow the below logic
+the o/p data type will be RDD(int,Float)
+*/
+//FlatMap expects a function that returns the values that needs to be flattened.
+//here the expected outcome is RDD(Int,Float) the map in line 32 is written to return (orderId,a revenue)
+val ordersFlattened = ordersGroupedbyKey.flatMap( order =>{
+order._2.toList.sortBy(o => -o).map(k => (order._1,k))
+})

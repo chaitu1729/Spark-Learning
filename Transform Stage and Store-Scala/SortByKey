@@ -1,0 +1,13 @@
+//sortbyKey sorts Data based on key. to apply sortByKey, the data shall be key,value pair
+val orders = sc.textFile("/public/retail_db/order_items")
+val odersSimplesortByKey = orders.map(order => ((order.split(",")(1).toInt),order))
+
+//if we need to sort data based on multiple keys we need to form a compositekey
+//in the below example we formed the key,value pair with ((orderId,price),order)
+// we sorted the data with orderId ascending, price decending(- highlights it) and products
+//finally we applied map to get rid of price in column and display order_Id and order as final result
+
+val ordersMap = orders.map(order => ((order.split(",")(1).toInt,-order.split(",")(4).toFloat),order))
+val ordersSorted = ordersMap.sortByKey().map(order =>{
+(order._1._1,order._2)
+})

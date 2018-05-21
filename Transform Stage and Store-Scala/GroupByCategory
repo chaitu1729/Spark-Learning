@@ -1,0 +1,44 @@
+val productsTemp = sc.textFile("/public/retail_db/products")
+val products = productsTemp.filter(_.split(",")(4)!="")
+val productsGroupBy = products.groupBy(_.split(",")(1))
+
+/*val productFilter = productsGroupBy.filter(element =>
+  (element._2.map(ele => ele.toList.map(price => {
+  val priceList = price.split(",")(4).toFloat})
+)) >= topNPrices(element._2,3))
+val productFilter = productsGroupBy.filter(order =>
+{
+order.map(
+{
+  val
+})
+
+})*/
+
+val productsFlattened = productsGroupBy.flatMap(order =>
+{
+val orderList = order._2.toList.map()
+
+
+})
+
+
+    //.split(",")(4)>=topNPrices(element._2,3)))
+
+def topNPrices(Items: Iterable[Float],n: Int): Float ={
+val ItemList = Items.map(rec => rec.split(",")(4).toFloat).toList
+val itemPriceSet = ItemList.toSet
+val ItemPriceList = itemPriceSet.toList.sortBy(p => -p)
+val topnPriceList = ItemPriceList.take(n)
+val min = topnPriceList.min
+return min
+}
+//val ItemList = productsGroupBy._2.map(rec => rec.split(",")(4).toFloat).toList;
+def filterCondition(Items: Iterable[String],n: Float): Boolean ={
+val ItemList = Items.map(rec => rec.split(",")(4).toFloat).toList
+val itemPriceSet = ItemList.toSet
+val ItemPriceList = itemPriceSet.toList.sortBy(p => -p)
+val topnPriceList = ItemPriceList.take(n)
+val min = topnPriceList.min
+return min
+}

@@ -1,0 +1,16 @@
+val orders = sc.textFile("/public/retail_db/orders")
+val ordersMap = orders.map(order => (order.split(",")(3),"")).countByKey
+//CountByKey returns a map not RDD and hence its not advisable for using in case of large datasets
+
+//in countBykey function we give logic to identify the key for which we need to count the no of ocurances
+
+val ordersRevenue = orders.map(order => order.split(",")(4).toFloat())
+
+//in case of reduce it always considers two input arguments of same type as return type argument
+val ordersTotal = ordersRevenue.reduce(order,revenue) => {
+  order+revenue
+}
+
+val minOrder = ordersRevenue.reduce(temp,order){
+  if(temp<order) temp else order
+}
